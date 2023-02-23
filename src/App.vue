@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
+import { useLoginStore } from "@/stores/auth"
+
+const LoginStore = useLoginStore();
+const {loadUser} = LoginStore;
+
+onMounted(() =>{
+  loadUser();
+});
+
 </script>
 
 <template>

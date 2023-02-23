@@ -40,38 +40,15 @@
 </template>
 
 <script setup lang="ts">
+
+import router from "@/router";
 import { useLoginStore } from "@/stores/auth";
-import type { FormInstance, FormRules } from "element-plus";
 import { ElLoading, ElMessage } from "element-plus";
 import { storeToRefs } from "pinia";
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 const LoginStore = useLoginStore();
-const { login, messageBoxRef } = storeToRefs(LoginStore);
+const { login, messageBoxRef, person } = storeToRefs(LoginStore);
 const { validateLogin } = LoginStore;
-
-const formRef = ref<FormInstance>();
-const rules = reactive<FormRules>({
-  email: [
-    {
-      required: true,
-      message: "Por favor ingrese el correo",
-      trigger: "blur",
-    },
-    {
-      pattern: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
-      message: "Porfavor Ingrese un correo valido",
-      trigger: "blur",
-    },
-  ],
-  password: [
-    {
-      required: true,
-      message: "Por favor ingrese la contraseña",
-      trigger: "blur",
-    },
-  ],
-});
-
 
 const loginValidate = async () => {
       await validateLogin();
@@ -82,4 +59,54 @@ const loginValidate = async () => {
       });
 };
 
+onMounted(() => {
+  if (!person.value &&  router.currentRoute.value.path != "/") {
+   router.push('/')
+  } 
+  else if(person.value &&  router.currentRoute.value.path == '/'){
+   router.push('/home')
+  }
+});
+
 </script>
+
+<style scoped>
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #f5f5f5;
+}
+#app{
+  width: 100%;
+}
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+
+</style>

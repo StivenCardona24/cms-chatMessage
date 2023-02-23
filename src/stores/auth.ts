@@ -5,6 +5,7 @@ import type { Login } from "@/interfaces/auth.interface";
 import type { Person } from "@/interfaces/person.interface";
 import type { MessageBoxRef } from "@/interfaces/messageBox.interface";
 
+
 const newLogin = (): Login => ({
   email: "",
   password: "",
@@ -40,7 +41,7 @@ export const useLoginStore = defineStore("login", () => {
         person.value = reponse.login
         setTimeout(()=>{
           updateLocalStorage();
-          window.location.href = "/chat";
+          window.location.href = "/home";
         },500)
         messageBoxRef.value = {
             type: "success",
@@ -65,28 +66,29 @@ export const useLoginStore = defineStore("login", () => {
         message: `Usuario incorrecto`,
       };
     }
-    const reponse = await createLogout(user.value);
+    const reponse = await createLogout(person.value);
 
     if(reponse.message == "logout"){
       messageBoxRef.value = {
         type: "success",
         message: `Has cerrado sesión correctamente `,
       };
-      user.value = null;
+      person.value = null;
       updateLocalStorage();
     }
   }
 
   const updateLocalStorage = () => {
-    localStorage.setItem('PersonChat', JSON.stringify(user.value));  
+    localStorage.setItem('PersonChat', JSON.stringify(person.value));  
   };
 
   const loadUser = () => {
     if(localStorage.getItem('PersonChat') != null){
-      user.value = JSON.parse(localStorage.getItem('PersonChat'))
+      person.value = JSON.parse(localStorage.getItem('PersonChat'))
+
     }
     else{
-      user.value = null;
+      person.value = null;
     }
   }
 
