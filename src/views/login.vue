@@ -1,6 +1,7 @@
 
 
-<template>
+<template >
+  <div class="login">
     <main class="form-signin w-100 m-auto">
       <form @submit.prevent="">
         <img class="mb-4" src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
@@ -37,6 +38,8 @@
   </div>
 </div>
     </main>
+
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -71,12 +74,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
-html,
-body {
-  height: 100%;
-}
 
-body {
+
+.login {
+  height: 100%;
   display: flex;
   align-items: center;
   text-align: center;
@@ -84,9 +85,7 @@ body {
   padding-bottom: 40px;
   background-color: #f5f5f5;
 }
-#app{
-  width: 100%;
-}
+
 .form-signin {
   max-width: 330px;
   padding: 15px;

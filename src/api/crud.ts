@@ -19,6 +19,7 @@ export const createCrud = (options: CrudOptions) => {
   const getAll = async (data?: any) => {
     try {
       const response = await api.get("/", { params: data });
+      console.log(response);
       return response.data;
     } catch (error) {
       options.errorGetAll?.(error);
